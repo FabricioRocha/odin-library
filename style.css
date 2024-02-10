@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color:#fcf0df;
+}
+
+p, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    position: sticky;
+    display: block;
+}
+
+#switch {
+    height: 3vh;
+}
+
+#btnAdd {
+    width: 100%;
+    min-height: 2rem;
+    height: 100%;
+    padding: auto;
+    margin: auto;
+}
+
+#formAdd {
+    margin-top: 10px;
+    display: none;
+    width: 100%;
+    gap: 1ch;
+    justify-content: space-evenly;
+}
+
+#formAdd input {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    text-wrap: nowrap;
+}
+
+#formAdd input .nopages {
+    flex-basis: 9ch;
+    flex-grow: 0;
+}
+
+#shelf {
+    margin-top: 3rem;
+}
+
+.card {
+    background-color: bisque;
+    border-radius: 20px;
+    max-width: 250px;
+    height: 300px;
+}
+
+.nocover {
+    height: 70%;
+    font-size: 48px;
+    text-align: center;
+    background-color: #fcf0df;
+    max-width: 95%;
+    margin-top: 5%;
+    font-weight: bolder;
+    border-radius: 50px;
+
+}

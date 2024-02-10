@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odin Library</title>
+    <script src="./js/book.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <header>
+        <h1>The Odin Library</h1>
+        <div id="switch">
+            <button id="btnAdd" type="button" onclick="formShow()">Add book</button>
+            <form id="formAdd">
+                <label>Title<input type="text"></label>
+                <label>Author<input type="text"></label>
+                <label class="nopages">No. pages<input type="text"></label>
+                <label>Read<input type="checkbox"></label>
+                <button type="button" onclick="formCancel()">Cancel</button>
+                <button type="button" onclick="formSave()">Save</button>
+            </form>
+        </div>
+    </header>
+    <section id="shelf">
+        <article class="card">
+            <div class="nocover">?</div>
+            <h3 class="bookTitle">Goddamnit!</h3>
+            <p><i>Will Yablome</i></p>
+            <p>293 pages</p>
+            <button type="button" class="bookdel">Remove</button>
+        </article>
+    </section>
+    <script>
+        /*
+          View-only code (as in MVC)
+        */
+        function formShow() {
+            let form = document.getElementById("formAdd");
+            let btn = document.getElementById("btnAdd");
+            form.style.display = "flex";
+            btn.style.display = "none";
+        }
+
+        function formHide() {
+            let form = document.getElementById("formAdd");
+            let btn = document.getElementById("btnAdd");
+            form.style.display = "none";
+            btn.style.display = "block";
+        }
+
+        function formSave() {
+            formHide();
+        }
+
+        function formCancel() {
+            formHide();
+        }
+
+        
+
+    </script>
+</body>
+</html>
