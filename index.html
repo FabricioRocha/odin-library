@@ -30,6 +30,8 @@
             <h3 class="bookTitle">Goddamnit!</h3>
             <p name="bookAuthor"><i>Will Yablome</i></p>
             <p name="bookPages">293 pages</p>
+            <input type="checkbox" name="bookRead"/>
+            <label for="bookRead">Unread</label>
             <button type="button" class="bookdel">Remove</button>
         </article>
     </section>
@@ -105,10 +107,35 @@
 
             let bookdata = bookGetByIndex(libindex);
             
-            let newcardchildren = newcard.childNodes;
-            newcardchildren[2].innerText = bookdata.title;
+            /*
+                Possibly not the best solution here, but works.
+                ".children" does not show up in VSCode autocomplete, but it works
+                better than ".childNodes", which returns lots of "#text" nodes
+                as well.
+            */
+            let newcardchildren = newcard.children;
+            newcardchildren[1].innerText = bookdata.title;
+            newcardchildren[2].innerText = bookdata.author;
+            newcardchildren[3].innerText = bookdata.noPages + " pages";
+            newcardchildren[4].checked = bookdata.isRead;
+            newcardchildren[5].innerText = (bookdata.isRead) ? "Read" : "Unread";
+            
+            // Making the "Read"/"Unread" label clickable
+            newcardchildren[4].setAttribute("id", `cardRead-${libindex}`);
+            newcardchildren[5].htmlFor = `cardRead-${libindex}`;
 
+            /*
+                Are we trying to change a copy or are we using a reference to the object?
 
+                This one got me confused and I had to resort to ChatGPT. I correctly guessed
+                that by calling bookdata.toggleRead() the actual object in arrLib would be
+                changed, but I messed up the event listener setup by assigning
+                bookdata.toggleRead() itself as the callback (and that was calling it
+                immediately, not as a callback). The whole thing worked fine when I
+                wrapped the call to toggleRead() in an arrow function.
+            */
+            newcardchildren[4].addEventListener("change", () => bookdata.toggleRead()); 
+    
             newcard.removeAttribute("hidden");
             let shelf = document.getElementById("shelf");
             shelf.appendChild(newcard);
