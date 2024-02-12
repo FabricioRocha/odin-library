@@ -1,9 +1,14 @@
 * {
     box-sizing: border-box;
+    --color-fg: peru;
+    --color-bg: #fcf0df;
+    --color-fg-text: black;
+    --color-bg-text: black;
+
 }
 
 body {
-    background-color:#fcf0df;
+    background-color: var(--color-bg);
 }
 
 p, h3 {
@@ -54,20 +59,38 @@ header {
 }
 
 .card {
-    background-color: bisque;
+    background-color: var(--color-fg);
     border-radius: 20px;
-    max-width: 250px;
-    height: 300px;
+    max-width: 200px;
+    height: 320px;
+    padding: 2px;
+}
+
+.card button {
+    display: block;
+    width: 95%;
+    padding: auto;
+    margin: 5px auto;
+}
+
+.cover {
+    height: 67%;
+    width: 190px;
+    margin: 5px auto;
+    border: var(--color-bg) 2px solid;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nocover {
-    height: 70%;
-    font-size: 48px;
+    font-size: 120px;
     text-align: center;
-    background-color: #fcf0df;
-    max-width: 95%;
-    margin-top: 5%;
+    width: 1.1em;
+    color: var(--color-fg);
+    background-color: var(--color-bg);
     font-weight: bolder;
-    border-radius: 50px;
+    border-radius: 50% 50%;
 
 }

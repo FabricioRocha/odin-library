@@ -13,27 +13,30 @@
         <div id="switch">
             <button id="btnAdd" type="button" onclick="formShow()">Add book</button>
             <form id="formAdd">
-                <label>Title<input type="text"></label>
-                <label>Author<input type="text"></label>
-                <label class="nopages">No. pages<input type="text"></label>
-                <label>Read<input type="checkbox"></label>
+                <label>Title<input type="text" id="fieldTitle"></label>
+                <label>Author<input type="text" id="fieldAuthor"></label>
+                <label class="nopages">No. pages<input type="text" id="fieldPages"></label>
+                <label>Read<input type="checkbox" id="fieldRead" value="true"></label>
                 <button type="button" onclick="formCancel()">Cancel</button>
                 <button type="button" onclick="formSave()">Save</button>
             </form>
         </div>
     </header>
     <section id="shelf">
-        <article class="card">
-            <div class="nocover">?</div>
+        <article class="card" data-libidx="0" hidden>
+            <div class="cover">
+                <div class="nocover">?</div>
+            </div>
             <h3 class="bookTitle">Goddamnit!</h3>
-            <p><i>Will Yablome</i></p>
-            <p>293 pages</p>
+            <p name="bookAuthor"><i>Will Yablome</i></p>
+            <p name="bookPages">293 pages</p>
             <button type="button" class="bookdel">Remove</button>
         </article>
     </section>
     <script>
         /*
-          View-only code (as in MVC)
+          "View related" code (as in MVC), while JS files contain the
+          M and C code
         */
         function formShow() {
             let form = document.getElementById("formAdd");
@@ -50,14 +53,67 @@
         }
 
         function formSave() {
+            let formTitle = document.getElementById("fieldTitle").value;
+            let formAuthor = document.getElementById("fieldAuthor").value;
+            let formPages = document.getElementById("fieldPages").value;
+            
+
+            
+            // TO DO: Validate inputs!
+            /*
+                The checkbox proved to be especially tricky. From MDN:
+                
+                    "a checkbox's value is only included in the submitted data if
+                     the checkbox is currently checked. If it is, then the value
+                     of the checkbox's value attribute is reported as the input's
+                     value, or on if no value is set. "
+                
+                The "value" property always came as "on" of, if the value property
+                is set to string "true" on the <input>, as "true", no matter if the
+                checkbox was checked or not. Apparently, most documentation refers
+                to the way checkboxes are read on the "submit" action of forms,
+                which might give them special treatment. Here, the right property
+                to read seems to be "checked".
+            
+            let formReadCheckbox = document.getElementById("fieldRead");
+            let chkReadValue = formReadCheckbox.value;
+            let chkReadChecked = formReadCheckbox.checked;
+            let readBool = (formRead === "true") ? true : false;
+            */
+            let formRead = document.getElementById("fieldRead").checked;
+            
+            let booknum = bookAdd(formTitle, formAuthor, formPages, formRead);
+            cardCreate(booknum);
+
+            // Update shelf
+
+            // TO DO: Clear form: old values remain there
+            document.getElementById("formAdd").reset();
+
             formHide();
         }
 
         function formCancel() {
+            document.getElementById("formAdd").reset();
             formHide();
         }
 
-        
+        function cardCreate(libindex) {
+            let cardtplt = document.querySelector(".card[data-libidx='0']");
+            let newcard = cardtplt.cloneNode(true);
+            newcard.setAttribute("data-libidx", libindex);
+
+            let bookdata = bookGetByIndex(libindex);
+            
+            let newcardchildren = newcard.childNodes;
+            newcardchildren[2].innerText = bookdata.title;
+
+
+            newcard.removeAttribute("hidden");
+            let shelf = document.getElementById("shelf");
+            shelf.appendChild(newcard);
+
+        }
 
     </script>
 </body>

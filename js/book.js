@@ -23,9 +23,14 @@ const arrLib = [];
 
 function bookAdd (title, author, noPages, isRead) {
     let newbook = new Book(title, author, noPages, isRead);
-    arrLib.push(newbook);
+    let index = arrLib.push(newbook) - 1;
+    return index;
 }
 
 function bookRemoveByIndex (idx) {
     arrLib.splice(idx, 1);
+}
+
+function bookGetByIndex (idx) {
+    return arrLib[idx];
 }
