@@ -23,7 +23,7 @@
         </div>
     </header>
     <section id="shelf">
-        <article class="card" data-libidx="0" hidden>
+        <article class="card" id="cardtplt" hidden>
             <div class="cover">
                 <div class="nocover">?</div>
             </div>
@@ -31,7 +31,7 @@
             <p name="bookAuthor"><i>Will Yablome</i></p>
             <p name="bookPages">293 pages</p>
             <input type="checkbox" name="bookRead"/>
-            <label for="bookRead">Unread</label>
+            <label for="bookRead">Read</label>
             <button type="button" class="bookdel">Remove</button>
         </article>
     </section>
@@ -101,11 +101,12 @@
         }
 
         function cardCreate(libindex) {
-            let cardtplt = document.querySelector(".card[data-libidx='0']");
+            let cardtplt = document.getElementById("cardtplt");
             let newcard = cardtplt.cloneNode(true);
             newcard.setAttribute("data-libidx", libindex);
+            newcard.removeAttribute("id");
 
-            let bookdata = bookGetByIndex(libindex);
+            let bookdata = bookGetById(libindex);
             
             /*
                 Possibly not the best solution here, but works.
@@ -118,7 +119,7 @@
             newcardchildren[2].innerText = bookdata.author;
             newcardchildren[3].innerText = bookdata.noPages + " pages";
             newcardchildren[4].checked = bookdata.isRead;
-            newcardchildren[5].innerText = (bookdata.isRead) ? "Read" : "Unread";
+            // newcardchildren[5].innerText = (bookdata.isRead) ? "Read" : "Unread";
             
             // Making the "Read"/"Unread" label clickable
             newcardchildren[4].setAttribute("id", `cardRead-${libindex}`);
@@ -134,7 +135,18 @@
                 immediately, not as a callback). The whole thing worked fine when I
                 wrapped the call to toggleRead() in an arrow function.
             */
-            newcardchildren[4].addEventListener("change", () => bookdata.toggleRead()); 
+            newcardchildren[4].addEventListener("change", () => bookdata.toggleRead());
+            
+            // Now the "Remove" button
+            newcardchildren[6].addEventListener("click", 
+                (evt) => {
+                    let shelf = document.getElementById("shelf");
+                    let card = document.querySelector(`#shelf > .card[data-libidx='${libindex}']`);
+                    shelf.removeChild(card);
+                    bookRemoveById(libindex);
+                }
+            );
+
     
             newcard.removeAttribute("hidden");
             let shelf = document.getElementById("shelf");
