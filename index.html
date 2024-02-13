@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odin Library</title>
     <script src="./js/book.js"></script>
+    <link href="https://db.onlinewebfonts.com/c/45d70da22e14455a2bbb55a814ece18d?family=Bookman" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -23,15 +24,14 @@
         </div>
     </header>
     <section id="shelf">
-        <article class="card" id="cardtplt" hidden>
+        <article class="card" id="cardtplt" >
             <div class="cover">
                 <div class="nocover">?</div>
             </div>
             <h3 class="bookTitle">Goddamnit!</h3>
-            <p name="bookAuthor"><i>Will Yablome</i></p>
-            <p name="bookPages">293 pages</p>
-            <input type="checkbox" name="bookRead"/>
-            <label for="bookRead">Read</label>
+            <p class="bookAuthor">Pat Pending</p>
+            <p class="bookPages">293 pages</p>
+            <label class="bookStatus"><input type="checkbox" name="bookRead"/>Read</label>
             <button type="button" class="bookdel">Remove</button>
         </article>
     </section>
@@ -76,11 +76,6 @@
                 to the way checkboxes are read on the "submit" action of forms,
                 which might give them special treatment. Here, the right property
                 to read seems to be "checked".
-            
-            let formReadCheckbox = document.getElementById("fieldRead");
-            let chkReadValue = formReadCheckbox.value;
-            let chkReadChecked = formReadCheckbox.checked;
-            let readBool = (formRead === "true") ? true : false;
             */
             let formRead = document.getElementById("fieldRead").checked;
             
@@ -89,7 +84,7 @@
 
             // Update shelf
 
-            // TO DO: Clear form: old values remain there
+            // Clear form: old values remain there
             document.getElementById("formAdd").reset();
 
             formHide();
@@ -118,12 +113,13 @@
             newcardchildren[1].innerText = bookdata.title;
             newcardchildren[2].innerText = bookdata.author;
             newcardchildren[3].innerText = bookdata.noPages + " pages";
-            newcardchildren[4].checked = bookdata.isRead;
-            // newcardchildren[5].innerText = (bookdata.isRead) ? "Read" : "Unread";
             
+            let checkRead = newcardchildren[4].children[0];
+            checkRead.checked = bookdata.isRead;
+                        
             // Making the "Read"/"Unread" label clickable
-            newcardchildren[4].setAttribute("id", `cardRead-${libindex}`);
-            newcardchildren[5].htmlFor = `cardRead-${libindex}`;
+            checkRead.setAttribute("id", `cardRead-${libindex}`);
+            newcardchildren[4].htmlFor = `cardRead-${libindex}`;
 
             /*
                 Are we trying to change a copy or are we using a reference to the object?
@@ -135,10 +131,10 @@
                 immediately, not as a callback). The whole thing worked fine when I
                 wrapped the call to toggleRead() in an arrow function.
             */
-            newcardchildren[4].addEventListener("change", () => bookdata.toggleRead());
+            checkRead.addEventListener("change", () => bookdata.toggleRead());
             
             // Now the "Remove" button
-            newcardchildren[6].addEventListener("click", 
+            newcardchildren[5].addEventListener("click", 
                 (evt) => {
                     let shelf = document.getElementById("shelf");
                     let card = document.querySelector(`#shelf > .card[data-libidx='${libindex}']`);
