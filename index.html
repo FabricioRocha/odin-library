@@ -14,17 +14,17 @@
         <div id="switch">
             <button id="btnAdd" type="button" onclick="formShow()">Add book</button>
             <form id="formAdd">
-                <label>Title<input type="text" id="fieldTitle"></label>
-                <label>Author<input type="text" id="fieldAuthor"></label>
-                <label class="nopages">No. pages<input type="text" id="fieldPages"></label>
-                <label>Read<input type="checkbox" id="fieldRead" value="true"></label>
+                <label class="lblName">Title<input type="text" id="fieldTitle" class="inpGrow" autofocus></label>
+                <label class="lblName">Author<input type="text" id="fieldAuthor" class="inpGrow"></label>
+                <label class="lblFixed">No. pages<input type="text" id="fieldPages" class="inpFixed"></label>
+                <label class="lblFixed">Read<input type="checkbox" id="fieldRead" class="inpFixed"></label>
                 <button type="button" onclick="formCancel()">Cancel</button>
                 <button type="button" onclick="formSave()">Save</button>
             </form>
         </div>
     </header>
     <section id="shelf">
-        <article class="card" id="cardtplt" >
+        <article class="card" id="cardtplt" hidden>
             <div class="cover">
                 <div class="nocover">?</div>
             </div>
@@ -45,6 +45,7 @@
             let btn = document.getElementById("btnAdd");
             form.style.display = "flex";
             btn.style.display = "none";
+            document.getElementById("fieldTitle").focus();
         }
 
         function formHide() {
@@ -142,7 +143,6 @@
                     bookRemoveById(libindex);
                 }
             );
-
     
             newcard.removeAttribute("hidden");
             let shelf = document.getElementById("shelf");
